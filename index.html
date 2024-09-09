@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rocket Nozzle Performance Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .main-container {
+      width: 80%;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .nozzle-background {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      background-image: url('nozzle.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .info-table {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+    }
+
+    .info-cell {
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .input-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .input-group {
+      width: 30%;
+    }
+
+    .input-group label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 5px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <h1>Rocket Nozzle Performance Calculator</h1>
+
+    <!-- Display Section -->
+    <div class="nozzle-background">
+      <div class="info-table">
+        <!-- Left Column Info -->
+        <div id="chamber-values-cell" class="info-cell" >
+          Chamber Pressure: <span id="chamberPressureValue">--</span> Pa<br>
+          Chamber Temperature: <span id="chamberTemperatureValue">--</span> K<br>
+          Exit Temperature: <span id="exitTemperatureValue">--</span> K
+        </div>
+        <!-- Throat Info (Center) -->
+        <div id="throat-values-cell" class="info-cell" >
+          Throat Diameter: <span id="throatDiameterValue">--</span> m<br>
+          Mass Flow: <span id="massFlowValue">--</span> kg/s
+        </div>
+        <!-- Right Column Info -->
+        <div id="exit-values-cell" class="info-cell" >
+          Exit Pressure: <span id="exitPressureValue">--</span> Pa<br>
+          Exit Velocity: <span id="exitVelocityValue">--</span> m/s<br>
+          Exit Mach: <span id="exitMachValue">--</span><br>
+          Thrust: <span id="thrustValue">--</span> N
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Section -->
+    <div class="input-container">
+      <!-- Left Inputs -->
+      <div class="input-group">
+        <label for="gasType">Gas Type:</label>
+        <select id="gasType">
+          <option value="Argon">Argon</option>
+          <option value="Air">Air</option>
+        </select>
+        <label for="chamberPressure">Chamber Pressure (Pa):</label>
+        <input type="number" id="chamberPressure" step="100">
+        <label for="chamberTemperature">Chamber Temperature (K):</label>
+        <input type="number" id="chamberTemperature" step="10">
+      </div>
+      
+      <!-- Center Input -->
+      <div class="input-group">
+        <label for="throatDiameter">Throat Diameter (m):</label>
+        <input type="number" id="throatDiameter" step="0.01">
+      </div>
+
+      <!-- Right Inputs -->
+      <div class="input-group">
+        <label for="exitDiameter">Exit Diameter (m):</label>
+        <input type="number" id="exitDiameter" step="0.01">
+        <label for="backPressure">Back Pressure (Pa):</label>
+        <input type="number" id="backPressure" step="100">
+      </div>
+    </div>
+
+    <!-- Fire Button -->
+    <button onclick="calculatePerformance()">Fire!</button>
+  </div>
+
+  <script>
+    function calculatePerformance() {
+      // Retrieve input values
+      const gasType = document.getElementById('gasType').value;
+      const throatDiameter = parseFloat(document.getElementById('throatDiameter').value);
+      const exitDiameter = parseFloat(document.getElementById('exitDiameter').value);
+      const chamberPressure = parseFloat(document.getElementById('chamberPressure').value);
+      const chamberTemperature = parseFloat(document.getElementById('chamberTemperature').value);
+      const backPressure = parseFloat(document.getElementById('backPressure').value);
+
+      // Set isentropic exponent based on gas type
+      const gamma = gasType === 'Argon' ? 1.66 : 1.4;
+
+      // Placeholder calculations - Replace these with actual formulas
+      const exitPressure = 101325; // Example: Placeholder value for exit pressure in Pascals
+      const exitVelocity = 1500;   // Example: Placeholder value for exit velocity in m/s
+      const exitMach = 2.5;        // Example: Placeholder value for exit Mach number
+      const massFlow = 1.2;        // Example: Placeholder value for mass flow in kg/s
+      const thrust = 1000;         // Example: Placeholder value for thrust in Newtons
+      const exitTemperature = 1200; // Example: Placeholder value for exit temperature in Kelvin
+
+      // Update the display values
+      document.getElementById('chamberPressureValue').textContent = chamberPressure.toFixed(2);
+      document.getElementById('chamberTemperatureValue').textContent = chamberTemperature.toFixed(2);
+      document.getElementById('throatDiameterValue').textContent = throatDiameter.toFixed(2);
+      document.getElementById('massFlowValue').textContent = massFlow.toFixed(2);
+      document.getElementById('exitPressureValue').textContent = exitPressure.toFixed(2);
+      document.getElementById('exitVelocityValue').textContent = exitVelocity.toFixed(2);
+      document.getElementById('exitMachValue').textContent = exitMach.toFixed(2);
+      document.getElementById('thrustValue').textContent = thrust.toFixed(2);
+      document.getElementById('exitTemperatureValue').textContent = exitTemperature.toFixed(2);
+    }
+  </script>
+</body>
+</html>
